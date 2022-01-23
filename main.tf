@@ -1,44 +1,44 @@
 
 provider "oci" {
   tenancy_ocid = var.oracle_tenancy_ocid
-  user_ocid = var.oracle_user_ocid
-  fingerprint = var.oracle_fingerprint
-  private_key = var.oracle_private_key
-  region = var.oracle_region
+  user_ocid    = var.oracle_user_ocid
+  fingerprint  = var.oracle_fingerprint
+  private_key  = var.oracle_private_key
+  region       = var.oracle_region
 }
 
 
 resource "oci_core_instance" "controller_node" {
   availability_domain = var.oracle_availability_domain
-  compartment_id = var.oracle_compartment_id
-  shape = "VM.Standard.A1.Flex"
+  compartment_id      = var.oracle_compartment_id
+  shape               = "VM.Standard.A1.Flex"
   defined_tags = {
     "Oracle-Tags.CreatedBy" = "oracleidentitycloudservice/${var.oracle_account_email}"
     # "Oracle-Tags.CreatedOn" = "2021-06-24T13:30:34.821Z"
   }
-  display_name = "microk8s Controller"
+  display_name      = "microk8s Controller"
   extended_metadata = {}
-  freeform_tags = {}
+  freeform_tags     = {}
   metadata = {
     ssh_authorized_keys = var.public_key
-    user_data = base64encode(templatefile("templates/initial_setup.sh", {}))
+    user_data           = base64encode(templatefile("templates/initial_setup.sh", {}))
 
   }
 
   agent_config {
     are_all_plugins_disabled = false
-    is_management_disabled = false
-    is_monitoring_disabled = false
+    is_management_disabled   = false
+    is_monitoring_disabled   = false
 
     plugins_config {
       desired_state = "ENABLED"
-      name = "Compute Instance Monitoring"
+      name          = "Compute Instance Monitoring"
     }
   }
 
   availability_config {
     is_live_migration_preferred = false
-    recovery_action = "RESTORE_INSTANCE"
+    recovery_action             = "RESTORE_INSTANCE"
   }
 
   create_vnic_details {
@@ -48,12 +48,12 @@ resource "oci_core_instance" "controller_node" {
       "Oracle-Tags.CreatedBy" = "oracleidentitycloudservice/${var.oracle_account_email}"
       # "Oracle-Tags.CreatedOn" = "2021-06-24T13:30:35.220Z"
     }
-    display_name = "microk8s Controller"
-    freeform_tags = {}
-    hostname_label = "microk8s-controller"
-    nsg_ids = [ var.network_security_group_id ]
+    display_name           = "microk8s Controller"
+    freeform_tags          = {}
+    hostname_label         = "microk8s-controller"
+    nsg_ids                = [var.network_security_group_id]
     skip_source_dest_check = false
-    subnet_id = var.subnet_id
+    subnet_id              = var.subnet_id
   }
 
   instance_options {
@@ -61,22 +61,22 @@ resource "oci_core_instance" "controller_node" {
   }
 
   launch_options {
-    boot_volume_type = "PARAVIRTUALIZED"
-    firmware = "UEFI_64"
+    boot_volume_type                    = "PARAVIRTUALIZED"
+    firmware                            = "UEFI_64"
     is_consistent_volume_naming_enabled = true
     is_pv_encryption_in_transit_enabled = true
-    network_type = "PARAVIRTUALIZED"
-    remote_data_volume_type = "PARAVIRTUALIZED"
+    network_type                        = "PARAVIRTUALIZED"
+    remote_data_volume_type             = "PARAVIRTUALIZED"
   }
 
   shape_config {
     memory_in_gbs = 12
-    ocpus = 2
+    ocpus         = 2
   }
 
   source_details {
     boot_volume_size_in_gbs = "100"
-    source_id = "ocid1.image.oc1.iad.aaaaaaaaoomqgvfu6zd3dhtrilbvo2s7qhmlqiodcogoonhpc2kgl5qlhddq"
+    source_id               = "ocid1.image.oc1.iad.aaaaaaaaoomqgvfu6zd3dhtrilbvo2s7qhmlqiodcogoonhpc2kgl5qlhddq"
     # source_id = "ocid1.image.oc1.iad.aaaaaaaa2tex34yxzqunbwnfnat6pkh2ztqchvfyygnnrhfv7urpbhozdw2a"
     source_type = "image"
   }
@@ -94,34 +94,34 @@ resource "oci_core_instance" "controller_node" {
 
 resource "oci_core_instance" "worker_node" {
   availability_domain = var.oracle_availability_domain
-  compartment_id = var.oracle_compartment_id
-  shape = "VM.Standard.A1.Flex"
+  compartment_id      = var.oracle_compartment_id
+  shape               = "VM.Standard.A1.Flex"
   defined_tags = {
     "Oracle-Tags.CreatedBy" = "oracleidentitycloudservice/${var.oracle_account_email}"
     # "Oracle-Tags.CreatedOn" = "2021-06-24T13:30:34.821Z"
   }
-  display_name = "microk8s Node"
+  display_name      = "microk8s Node"
   extended_metadata = {}
-  freeform_tags = {}
+  freeform_tags     = {}
   metadata = {
     ssh_authorized_keys = var.public_key
-    user_data = base64encode(templatefile("templates/initial_setup.sh", {}))
+    user_data           = base64encode(templatefile("templates/initial_setup.sh", {}))
   }
 
   agent_config {
     are_all_plugins_disabled = false
-    is_management_disabled = false
-    is_monitoring_disabled = false
+    is_management_disabled   = false
+    is_monitoring_disabled   = false
 
     plugins_config {
       desired_state = "ENABLED"
-      name = "Compute Instance Monitoring"
+      name          = "Compute Instance Monitoring"
     }
   }
 
   availability_config {
     is_live_migration_preferred = false
-    recovery_action = "RESTORE_INSTANCE"
+    recovery_action             = "RESTORE_INSTANCE"
   }
 
   create_vnic_details {
@@ -131,12 +131,12 @@ resource "oci_core_instance" "worker_node" {
       "Oracle-Tags.CreatedBy" = "oracleidentitycloudservice/${var.oracle_account_email}"
       # "Oracle-Tags.CreatedOn" = "2021-06-24T13:30:35.220Z"
     }
-    display_name = "microk8s Node"
-    freeform_tags = {}
-    hostname_label = "microk8s-node"
-    nsg_ids = [ var.network_security_group_id ]
+    display_name           = "microk8s Node"
+    freeform_tags          = {}
+    hostname_label         = "microk8s-node"
+    nsg_ids                = [var.network_security_group_id]
     skip_source_dest_check = false
-    subnet_id = var.subnet_id
+    subnet_id              = var.subnet_id
   }
 
   instance_options {
@@ -144,22 +144,22 @@ resource "oci_core_instance" "worker_node" {
   }
 
   launch_options {
-    boot_volume_type = "PARAVIRTUALIZED"
-    firmware = "UEFI_64"
+    boot_volume_type                    = "PARAVIRTUALIZED"
+    firmware                            = "UEFI_64"
     is_consistent_volume_naming_enabled = true
     is_pv_encryption_in_transit_enabled = true
-    network_type = "PARAVIRTUALIZED"
-    remote_data_volume_type = "PARAVIRTUALIZED"
+    network_type                        = "PARAVIRTUALIZED"
+    remote_data_volume_type             = "PARAVIRTUALIZED"
   }
 
   shape_config {
     memory_in_gbs = 12
-    ocpus = 2
+    ocpus         = 2
   }
 
   source_details {
     boot_volume_size_in_gbs = "40"
-    source_id = "ocid1.image.oc1.iad.aaaaaaaaoomqgvfu6zd3dhtrilbvo2s7qhmlqiodcogoonhpc2kgl5qlhddq"
+    source_id               = "ocid1.image.oc1.iad.aaaaaaaaoomqgvfu6zd3dhtrilbvo2s7qhmlqiodcogoonhpc2kgl5qlhddq"
     # source_id = "ocid1.image.oc1.iad.aaaaaaaa2tex34yxzqunbwnfnat6pkh2ztqchvfyygnnrhfv7urpbhozdw2a"
     source_type = "image"
   }
