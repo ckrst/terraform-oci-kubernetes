@@ -29,5 +29,5 @@ variable "subnet_id" {
 }
 
 variable "network_security_group_id" {
-    description = "The OCID of the security group
+    description = "The OCID of the security group"
 }
