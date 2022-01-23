@@ -103,7 +103,7 @@ resource "oci_core_instance" "controller_node" {
   }
 
   source_details {
-    boot_volume_size_in_gbs = "100"
+    boot_volume_size_in_gbs = "50"
     source_id               = "ocid1.image.oc1.iad.aaaaaaaaoomqgvfu6zd3dhtrilbvo2s7qhmlqiodcogoonhpc2kgl5qlhddq"
     # source_id = "ocid1.image.oc1.iad.aaaaaaaa2tex34yxzqunbwnfnat6pkh2ztqchvfyygnnrhfv7urpbhozdw2a"
     source_type = "image"
@@ -186,7 +186,7 @@ resource "oci_core_instance" "worker_node" {
   }
 
   source_details {
-    boot_volume_size_in_gbs = "40"
+    boot_volume_size_in_gbs = "50"
     source_id               = "ocid1.image.oc1.iad.aaaaaaaaoomqgvfu6zd3dhtrilbvo2s7qhmlqiodcogoonhpc2kgl5qlhddq"
     # source_id = "ocid1.image.oc1.iad.aaaaaaaa2tex34yxzqunbwnfnat6pkh2ztqchvfyygnnrhfv7urpbhozdw2a"
     source_type = "image"
