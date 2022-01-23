@@ -24,6 +24,14 @@ variable "oracle_region" {
   description = "The region to create the nodes in"
 }
 
+variable "oracle_availability_domain" {
+  description = "The availability domain to create the nodes in"
+}
+
+variable "public_key" {
+  description = "The public key to use for SSH access to the nodes"
+}
+
 variable "subnet_id" {
   description = "The OCID of the subnet to create the nodes in"
 }
