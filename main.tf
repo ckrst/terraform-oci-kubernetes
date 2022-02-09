@@ -154,7 +154,7 @@ resource "oci_core_instance" "worker_node" {
 
   create_vnic_details {
     # assign_private_dns_record = false
-    assign_public_ip = false
+    assign_public_ip = true
     defined_tags = {
       "Oracle-Tags.CreatedBy" = "oracleidentitycloudservice/${var.oracle_account_email}"
       # "Oracle-Tags.CreatedOn" = "2021-06-24T13:30:35.220Z"
