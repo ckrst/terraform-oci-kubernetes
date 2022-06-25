@@ -25,6 +25,7 @@ firewall-cmd --zone=public --permanent --add-port=443/tcp
 firewall-cmd --zone=public --permanent --add-port=10443/tcp
 firewall-cmd --zone=public --permanent --add-port=10250/tcp
 firewall-cmd --zone=public --permanent --add-port=10255/tcp
+firewall-cmd --zone=public --permanent --add-port=16443/tcp
 firewall-cmd --zone=public --permanent --add-port=25000/tcp
 firewall-cmd --zone=public --permanent --add-port=12379/tcp
 firewall-cmd --zone=public --permanent --add-port=10257/tcp
